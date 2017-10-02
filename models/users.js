@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const users_schema = new Schema({
+const usersSchema = new Schema({
     name: {
         type: String,
         require: true
@@ -9,9 +9,12 @@ const users_schema = new Schema({
     phone: {
         type: String,
         require: true
+    },
+    tasks: {
+        type: [String]
     }
 });
 
-const users_model = mongoose.model('users', users_schema);
+const usersModel = mongoose.model('users', usersSchema);
 
-modeule.exports = users_model;
+module.exports = usersModel;
