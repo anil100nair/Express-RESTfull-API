@@ -1,0 +1,25 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "Simple To Do App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anil100nair/Express-RESTfull-API.git"
+  },
+  "author": "Anil Nair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anil100nair/Express-RESTfull-API/issues"
+  },
+  "homepage": "https://github.com/anil100nair/Express-RESTfull-API#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.1",
+    "mongoose": "^4.11.14"
+  }
+}
