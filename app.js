@@ -20,9 +20,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 
-app.listen(PORT, () => {
-    console.log('Listening on Port: '+ PORT);
-});
+const db = require('./models/db')
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log('Listening on port: ' + PORT);
+        });
+    })
+    .catch(err => {
+        console.log('Error: ', err);
+    });
 // Or is it better to use
 // const http = require('http');
 // const server = http.createServer();
