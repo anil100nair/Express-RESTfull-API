@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const index = require('./routes/users');
+const users = require('./routes/users');
+const tasks = require('./routes/tasks');
+const index = require('./routes/index');
 
 const PORT = process.env.PORT;
 
@@ -19,6 +21,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/users', users);
+app.use('/users/:userId/tasks', (req, res, next) => {
+    req.userId = req.params.userId;
+    next();
+}, tasks);
 
 const db = require('./models/db')
     .then(() => {

@@ -3,18 +3,14 @@ const router = express.Router();
 const db = require('../models/db');
 const userApi = require('../controllers/users');
 
-router.get('/', (req, res, next) => {
-    res.render('index');
-});
+router.post('/', userApi.createUser);
 
-router.post('/users', userApi.createUser);
+router.get('/', userApi.findAllUsers);
 
-router.get('/users', userApi.findAllUsers);
+router.get('/:userId', userApi.findOneUser);
 
-router.get('/users/:id', userApi.findOneUser);
+router.put('/:userId', userApi.editUser);
 
-router.put('/users/:id', userApi.editUser);
-
-router.delete('/users/:id', userApi.deleteUser);
+router.delete('/:userId', userApi.deleteUser);
 
 module.exports = router;

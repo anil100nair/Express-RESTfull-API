@@ -9,6 +9,10 @@ const tasksSchema = new Schema({
     isDone: {
         type: Boolean,
         require: true
+    },
+    taskUser: {
+        type: String,
+        require: true
     }
 });
 

@@ -19,7 +19,7 @@ exports.findAllUsers = (req, res) => {
 }
 
 exports.findOneUser = (req, res) => {
-    usersModel.findById(req.params.id)
+    usersModel.findById(req.params.userId)
               .then(user => {
                   if (user === null) {
                       res.status(400).send('Invalid params');
@@ -34,7 +34,7 @@ exports.findOneUser = (req, res) => {
 }
 
 exports.editUser = (req, res) => {    
-    usersModel.findById(req.params.id, (err, user) => {
+    usersModel.findById(req.params.userId, (err, user) => {
         if (err) {
             console.log(err);
             res.status(500).send();
@@ -43,13 +43,13 @@ exports.editUser = (req, res) => {
             user.phone = req.body.phone || user.phone;
             user.tasks = req.body.tasks || user.tasks;
         
-            user.save((err, user) => {
+            user.save((err, savedUser) => {
                 if (err) {
                     console.log(err);
                     res.status(500).send(err);
                 } else {
                     console.log('User successfully updated.');
-                    res.status(200).send(user);
+                    res.status(200).send(savedUser);
                 }
             });
         }
@@ -57,7 +57,7 @@ exports.editUser = (req, res) => {
 }
 
 exports.deleteUser = (req, res) => {
-    usersModel.findByIdAndRemove(req.params.id, (err, user) => {
+    usersModel.findByIdAndRemove(req.params.userId, (err, user) => {
         if (err) {
             console.log(err);
             res.status(500).send();
