@@ -28,20 +28,19 @@ exports.findAllUsers = (req, res) => {
 }
 
 exports.findOneUser = (req, res) => {
-    usersModel.findById(req.params.userId)
-              .then(user => {
-                  if (user === null) {
-                      console.log("Invalid params");
-                      res.status(400).send();
-                  } else {
-                      console.log("User found");
-                      res.status(200).send(user);
-                  }
-              })
-              .catch(err => {
-                  console.log(err);
-                  res.status(404).send();
-              });
+    usersModel.findById(req.params.userId).then(user => {
+        if (user === null) {
+            console.log("Invalid params");
+            res.status(400).send();
+        } else {
+            console.log("User found");
+            res.status(200).send(user);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(404).send();
+    });
 }
 
 exports.editUser = (req, res) => {    
