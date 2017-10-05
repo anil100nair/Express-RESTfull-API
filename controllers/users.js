@@ -1,5 +1,6 @@
 var usersModel = require('../models/users');
 
+// Add user
 exports.createUser = (req, res) => {
     new usersModel({
         name: req.body.name,
@@ -7,47 +8,50 @@ exports.createUser = (req, res) => {
     }).save((err, savedUser) => {
         if (err) {
             console.log(err);
-            res.status(500).send();
+            res.status(500).json();
         } else {
             console.log("User successfully created.");
-            res.status(201).send();
+            res.status(201).json();
         }
     });
 }
 
+// Retrieve all users
 exports.findAllUsers = (req, res) => {
     usersModel.find((err, users) => {
         if (err) {
             console.log(err);
-            res.status(400).send();
+            res.status(400).json();
         } else {
             console.log("All Users found");
-            res.status(200).send(users);
+            res.status(200).json(users);
         }
     });
 }
 
+// Retrieve specific user
 exports.findOneUser = (req, res) => {
     usersModel.findById(req.params.userId).then(user => {
         if (user === null) {
             console.log("Invalid params");
-            res.status(400).send();
+            res.status(400).json();
         } else {
             console.log("User found");
-            res.status(200).send(user);
+            res.status(200).json(user);
         }
     })
     .catch(err => {
         console.log(err);
-        res.status(404).send();
+        res.status(404).json();
     });
 }
 
+// Update user
 exports.editUser = (req, res) => {    
     usersModel.findById(req.params.userId, (err, user) => {
         if (err) {
             console.log(err);
-            res.status(404).send();
+            res.status(404).json();
         } else {
             user.name = req.body.name || user.name;
             user.phone = req.body.phone || user.phone;
@@ -55,24 +59,25 @@ exports.editUser = (req, res) => {
             user.save((err, savedUser) => {
                 if (err) {
                     console.log(err);
-                    res.status(500).send();
+                    res.status(500).json();
                 } else {
                     console.log('User successfully updated.');
-                    res.status(201).send();
+                    res.status(201).json();
                 }
             });
         }
     });
 }
 
+// Delete user
 exports.deleteUser = (req, res) => {
     usersModel.findByIdAndRemove(req.params.userId, (err, user) => {
         if (err) {
             console.log(err);
-            res.status(404).send();
+            res.status(404).json();
         } else {
             console.log('User successfully deleted.');
-            res.status(204).send();
+            res.status(204).json();
         }
     });
 }

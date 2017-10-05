@@ -15,11 +15,14 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
+// Adding Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', index);
 app.use('/users', users);
 app.use('/users/:userId/tasks', (req, res, next) => {
@@ -27,6 +30,7 @@ app.use('/users/:userId/tasks', (req, res, next) => {
     next();
 }, tasks);
 
+// Connect to DB and then listen
 const db = require('./models/db')
     .then(() => {
         app.listen(PORT, () => {
