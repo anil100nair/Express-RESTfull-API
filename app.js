@@ -14,13 +14,14 @@ const app = express();
 // View Engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
 // Adding Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client')));
 
 // Routes
 app.use('/', index);
@@ -34,7 +35,7 @@ app.use('/users/:userId/tasks', (req, res, next) => {
 const db = require('./models/db')
     .then(() => {
         app.listen(PORT, () => {
-            console.log('Listening on port: ' + PORT);
+            console.log('Server started on port: ' + PORT);
         });
     })
     .catch(err => {
