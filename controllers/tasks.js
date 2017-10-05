@@ -4,30 +4,34 @@ const usersModel = require('../models/users');
 // Add task
 exports.createTask = (req, res) => {
     req.params.userId = req.userId;
-    new tasksModel({
-        task: req.body.task,
-        isDone: req.body.isDone,
-        taskUser: req.params.userId
-    }).save((err, task) => {
-        console.log("Task successfully created.");
-        usersModel.findById(req.params.userId, (err, user) => {
-            if (err) {
-                console.log(err);
-                res.status(404).json();
-            } else {
-                user.tasks.push(task.id);
-                user.save((err, savedUser) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).json();
-                    } else {
-                        console.log('User successfully updated.');
-                        res.status(201).json();
-                    }
-                });
-            }
+    if (!req.body.task || !(req.body.isDone + "") || !(req.body.taskUser)) {
+        res.status(400).json({ "Error": "Invalid Data" });
+    } else {
+        new tasksModel({
+            task: req.body.task,
+            isDone: req.body.isDone,
+            taskUser: req.params.userId
+        }).save((err, task) => {
+            console.log("Task successfully created.");
+            usersModel.findById(req.params.userId, (err, user) => {
+                if (err) {
+                    console.log(err);
+                    res.status(404).json();
+                } else {
+                    user.tasks.push(task.id);
+                    user.save((err, savedUser) => {
+                        if (err) {
+                            console.log(err);
+                            res.status(500).json();
+                        } else {
+                            console.log('User successfully updated.');
+                            res.status(201).json();
+                        }
+                    });
+                }
+            });
         });
-    });
+    }
 }
 
 // Retrieve all tasks
@@ -50,7 +54,7 @@ exports.findOneTask = (req, res) => {
         .then(task => {
             if (task === null) {
                 console.log("Invalid params");
-                res.status(400).json({ "Error": "Invalid data"});
+                res.status(400).json({ "Error": "Invalid data" });
             } else {
                 console.log("Task found.");
                 res.status(200).json(task);
