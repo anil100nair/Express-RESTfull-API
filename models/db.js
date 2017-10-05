@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-const uri = 'mongodb://dbuser:dbpass@ds155674.mlab.com:55674/express-restful-to-do-list';
+const uri = process.env.MONGOLAB_URL_TODO;
 
 const db = mongoose.connect(uri, {
     useMongoClient: true

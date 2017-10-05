@@ -44,13 +44,13 @@ exports.findAllTasks = (req, res) => {
     });
 }
 
-// Retrieve specific task
+// Retrieve single task
 exports.findOneTask = (req, res) => {
     tasksModel.findById(req.params.taskId)
         .then(task => {
             if (task === null) {
                 console.log("Invalid params");
-                res.status(400).json();
+                res.status(400).json({ "Error": "Invalid data"});
             } else {
                 console.log("Task found.");
                 res.status(200).json(task);

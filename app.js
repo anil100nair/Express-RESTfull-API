@@ -21,7 +21,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Static files
-app.use(express.static(path.join(__dirname, 'client')));
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'client/src')));
+// app.use('/node_modules', express.static(path.join(__dirname, '/client/node_modules')));
 
 // Routes
 app.use('/', index);
@@ -41,7 +43,3 @@ const db = require('./models/db')
     .catch(err => {
         console.log('Error: ', err);
     });
-// Or is it better to use
-// const http = require('http');
-// const server = http.createServer();
-// server.listen(PORT);
